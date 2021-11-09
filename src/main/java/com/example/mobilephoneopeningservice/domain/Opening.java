@@ -1,6 +1,7 @@
 package com.example.mobilephoneopeningservice.domain;
 
 import com.example.mobilephoneopeningservice.domain.common.BaseEntity;
+import com.example.mobilephoneopeningservice.domain.common.OpeningEntityListener;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
@@ -16,6 +17,8 @@ import java.util.List;
 @NoArgsConstructor
 @ToString(callSuper = true)
 @EqualsAndHashCode(callSuper = true)
+@EntityListeners(value = {OpeningEntityListener.class})
+
 public class Opening extends BaseEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
