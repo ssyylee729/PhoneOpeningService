@@ -22,8 +22,12 @@ public class ViewMainController {
     @GetMapping
     public String getMainView(Model model){
         List<OpeningDto> openingDtoList = openingService.getOpeningDtoWaitingList();
+        int totalCnt = openingService.getOpeningDtoList().size();
+        int waitingCnt = openingDtoList.size();
         model.addAttribute("openingList", openingDtoList);
-
+        model.addAttribute("totalCnt", totalCnt);
+        model.addAttribute("waitingCnt", waitingCnt);
+        model.addAttribute("completedCnt", totalCnt - waitingCnt);
         return "index";
     }
 }

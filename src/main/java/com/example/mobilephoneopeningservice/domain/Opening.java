@@ -19,6 +19,7 @@ import java.util.List;
 @EntityListeners(value = {OpeningEntityListener.class})
 @Audited
 public class Opening extends BaseEntity {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -51,5 +52,7 @@ public class Opening extends BaseEntity {
     List<OpeningHistory> openingHistories = new ArrayList<>();
 
 
-
+    public Opening(String opening_id) {
+        this.openingId = opening_id;
+    }
 }

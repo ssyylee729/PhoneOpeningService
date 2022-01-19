@@ -8,6 +8,7 @@ import org.springframework.batch.core.configuration.annotation.JobBuilderFactory
 import org.springframework.batch.core.configuration.annotation.StepBuilderFactory;
 import org.springframework.batch.core.launch.support.RunIdIncrementer;
 
+import org.springframework.batch.item.ItemProcessor;
 import org.springframework.batch.item.ItemWriter;
 import org.springframework.batch.item.database.BeanPropertyItemSqlParameterSourceProvider;
 import org.springframework.batch.item.database.JdbcBatchItemWriter;
@@ -52,8 +53,17 @@ public class OpeningProcessingConfiguration {
         return stepBuilderFactory.get("openingProcessingStep")
                 .<Opening, Opening> chunk(10)
                 .reader(jpaCursorItemReader())
+                .processor(itemProcessor())
                 .writer(jdbcOpeningItemWriter())
                 .build();
+    }
+
+    private ItemProcessor<Opening,Opening> itemProcessor() {
+        return item -> {
+            log.info("processor, item {}", item.toString());
+
+            return item;
+        };
     }
     private JpaCursorItemReader<Opening> jpaCursorItemReader() throws Exception {
         JpaCursorItemReader<Opening> itemReader = new JpaCursorItemReaderBuilder<Opening>()
@@ -64,28 +74,29 @@ public class OpeningProcessingConfiguration {
         itemReader.afterPropertiesSet();
         return  itemReader;
     }
-//    private JdbcCursorItemReader<Opening> jdbcOpeningItemReader() throws Exception {
-//        JdbcCursorItemReader<Opening> itemReader = new JdbcCursorItemReaderBuilder<Opening>()
-//                .name("jdbcOpeningItemReader")
-//                .dataSource(dataSource)
-//                .sql("select * from opening where status = 0")
-//                .rowMapper((result, rowNum) ->
+    private JdbcCursorItemReader<Opening> jdbcOpeningItemReader() throws Exception {
+        log.info("in jdbcOpeningItemReader");
+        JdbcCursorItemReader<Opening> itemReader = new JdbcCursorItemReaderBuilder<Opening>()
+                .name("jdbcOpeningItemReader")
+                .dataSource(dataSource)
+                .sql("select * from opening where status = 0")
+                .rowMapper((result, rowNum) -> new Opening(result.getString("opening_id"))
 //
 //                        Opening.builder()
 //                                .openingId(result.getString("opening_id"))
 //                                .status(result.getInt("status"))
 //                                .build()
-//                )
-//                .build();
-//        itemReader.afterPropertiesSet();
-//        return itemReader;
-//
-//    }
+                )
+                .build();
+        itemReader.afterPropertiesSet();
+        return itemReader;
+
+    }
     private ItemWriter<Opening> jdbcOpeningItemWriter() {
         JdbcBatchItemWriter<Opening> itemWriter = new JdbcBatchItemWriterBuilder<Opening>()
                 .dataSource(dataSource)
                 .itemSqlParameterSourceProvider(new BeanPropertyItemSqlParameterSourceProvider<>())
-                //Person class를 파라미터로 자동 설정해줌.
+                //Opening class를 파라미터로 자동 설정해줌.
                 .sql("update opening set status = 2 where opening_id = :openingId")
                 .build();
         itemWriter.afterPropertiesSet();
