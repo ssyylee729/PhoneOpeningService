@@ -1,7 +1,11 @@
 spring:
-  h2:
-    console:
-      enabled: true
+#  h2:
+#    console:
+#      enabled: true
+  batch:
+    job:
+      names: ${job.name:NONE}
+    initialize-schema: never
   jpa:
     show-sql: true
     properties:
@@ -9,6 +13,11 @@ spring:
         format_sql: true
     generate-ddl: true
     hibernate:
-      ddl-auto: create-drop
+      ddl-auto: update
+  datasource:
+    url: jdbc:mysql://localhost:3306/opening_manager?characterEncoding=UTF-8
+    username: root
+    password: #기본적으로 비어있음
+    initialization-mode: never
 server:
   port: 8010

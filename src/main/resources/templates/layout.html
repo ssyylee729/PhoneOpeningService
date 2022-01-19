@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html lang="ko" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<html lang="ko" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 
 <!-- 공통 헤드-->
 <head>
@@ -42,7 +43,23 @@
 <script th:src="@{/bootstrap/js/sb-admin-2.min.js}"></script>
 <script th:src="@{/bootstrap/vendor/datatables/jquery.dataTables.min.js}"></script>
 <script th:src="@{/bootstrap/vendor/datatables/dataTables.bootstrap4.min.js}"></script>
+<script>
+    $(document).ready(function() {
+        $.ajax({
+            type: "GET",
+            dataType : 'text',
+            url: "/api/staffs/name",
+            success: function(result){
+                $("#userName").text(result+" 님");
+            },
+            error: function(err){
+                alert("사용자 정보를 불러오는 데 문제가 발생했습니다.");
+            }
+        })
 
+    });
+
+</script>
 <th:block layout:fragment="script">
 
 </th:block>

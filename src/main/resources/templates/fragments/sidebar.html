@@ -1,6 +1,5 @@
 <!DOCTYPE html>
-<html lang="ko" xmlns:th="http://www.thymeleaf.org">
-
+<html lang="ko" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <div th:fragment="sidebarFragment">
 
     <!-- Sidebar -->
@@ -13,7 +12,7 @@
         </a>
         <hr class="sidebar-divider my-0">
         <li class="nav-item active">
-            <a class="nav-link" th:href="@{/main}">
+            <a class="nav-link" th:href="@{/main}" sec:authorize="isAuthenticated()">
                 <i class="fas fa-fw fa-tachometer-alt"></i>
                 <span>대시보드</span></a>
         </li>
@@ -24,15 +23,21 @@
             청약 서비스
         </div>
         <li class="nav-item">
-            <a class="nav-link" th:href="@{/openings}">
+            <a class="nav-link" th:href="@{/openings}" sec:authorize="isAuthenticated()">
                 <i class="fas fa-fw fa-chart-area"></i>
                 <span>청약 관리</span></a>
         </li>
         <li class="nav-item">
-            <a class="nav-link" th:href="@{/customers}">
+            <a class="nav-link" th:href="@{/customers}" sec:authorize="isAuthenticated()">
                 <i class="fas fa-fw fa-wrench"></i>
                 <span>고객 관리</span></a>
         </li>
+        <li class="nav-item">
+            <a class="nav-link" th:href="@{/devices}" sec:authorize="isAuthenticated()">
+                <i class="fas fa-fw fa-phone"></i>
+                <span>디바이스 관리</span></a>
+        </li>
+
         <hr class="sidebar-divider">
 
         <!-- Heading -->
@@ -40,7 +45,7 @@
             관리자
         </div>
         <li class="nav-item">
-            <a class="nav-link" th:href="@{/users}">
+            <a class="nav-link" th:href="@{/staffs}" sec:authorize="hasRole('ROLE_ADMIN')">
                 <i class="fas fa-fw fa-cog"></i>
                 <span>직원 정보</span></a>
         </li>

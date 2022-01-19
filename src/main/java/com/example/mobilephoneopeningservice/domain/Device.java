@@ -19,13 +19,16 @@ public class Device extends BaseEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    private String deviceId;
+
     private String name;
 
-    private LocalDateTime registedDt;
+    private String registeredDt;
 
-    private Integer registerStatus;
+    private int registerStatus; //0 - 미등록, 1 - 등록 (고객, 청약 매핑을 의미)
 
-    @ManyToOne
+    @OneToOne(mappedBy = "device") //Opening과의 1:1 관계만 표기하고, openingId는 표기하지 않음.
+    @ToString.Exclude
     private Opening opening;
 
 

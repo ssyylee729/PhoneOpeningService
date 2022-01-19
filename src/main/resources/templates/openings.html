@@ -1,8 +1,8 @@
 <!DOCTYPE html>
 <html lang="ko" xmlns:th="http://www.thymeleaf.org"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-      layout:decorate="~{layout}"
-      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+      layout:decorate="~{layout}">
+     <!-- xmlns:sec="http://www.thymeleaf.org/extras/spring-security">-->
 
 <body>
 <div layout:fragment="content">
@@ -23,39 +23,27 @@
                     <table class="table table-bordered" id="dataTable" >
                         <thead>
                         <tr>
-                            <th>Activation ID</th>
-                            <th>Device Type</th>
-                            <th>Phone No</th>
-                            <th>Activated</th>
-                            <th>Req date</th>
-                            <th>Activated date</th>
+                            <th>청약 ID</th>
+                            <th>고객 ID</th>
+                            <th>고객 이름</th>
+                            <th>청약 진행상태</th>
+                            <th>요청 일자</th>
+                            <th>디바이스 ID</th>
+                            <th>직원 ID</th>
                         </tr>
                         </thead>
                         <tbody>
-                        <tr>
-                            <td>WE000001</td>
-                            <td>Wearable</td>
-                            <td>010-12**-****</td>
-                            <td>Y</td>
-                            <td>21.09.25 13:11:02</td>
-                            <td>21.09.25 14:00:00</td>
+                        <tr data-toggle="modal" data-target="#updateModal" th:each="list: ${openingList}">
+                            <!-- <th><input type="checkbox"></th>-->
+                            <td th:text="${list.getOpeningId()}"></td>
+                            <td th:text="${list.getCustomerId()}"></td>
+                            <td > test </td>
+                            <td th:text="${list.getStatus()}"></td>
+                            <td th:text="${list.getRequestDt()}"></td>
+                            <td th:text="${list.getDeviceId()}"></td>
+                            <td th:text="${list.getStaffId()}"></td>
                         </tr>
-                        <tr>
-                            <td>TA000001</td>
-                            <td>Tablet</td>
-                            <td>010-12**-****</td>
-                            <td>Y</td>
-                            <td>21.09.25 13:11:02</td>
-                            <td>21.09.25 14:00:00</td>
-                        </tr>
-                        <tr>
-                            <td>MB000001</td>
-                            <td>Mobile</td>
-                            <td>010-12**-****</td>
-                            <td>Y</td>
-                            <td>21.09.25 13:11:02</td>
-                            <td>21.09.25 14:00:00</td>
-                        </tr>
+
                         </tbody>
                     </table>
                 </div>
@@ -74,31 +62,23 @@
                 </div>
                 <div class="modal-body">
                     <div class="input-group" style="margin-bottom: 7px">
-                        <label for="customerName" style="margin-right: 5px"> 고객 성함 : </label>
-                        <input type="text" id="customerName" class="form-control form-control-sm" placeholder="검색버튼을 누르세요.">
-                        <div class="input-group-append">
-                            <button class="btn btn-secondary" type="button" style="padding: 0.175rem 0.55rem;">
-                                <i class="fas fa-search fa-sm"></i>
-                            </button>
-                        </div>
-                    </div>
+                        <label for="customerId" style="margin-right: 5px"> 고객ID</label>
+                        <input type="text" id="customerId" class="form-control form-control-sm" placeholder="고객 ID를 입력해주세요.">
 
-                    <div class="input-group" style="margin-bottom: 7px">
-                        <label for="phoneNo" style="margin-right: 5px"> 개통 번호 : </label>
-                        <input type="text" id="phoneNo" class="form-control form-control-sm" placeholder="010-0000-0000">
                     </div>
                     <div class="input-group" style="margin-bottom: 7px">
-                        <label for="deviceType" style="margin-right: 5px"> 기기 타입 : </label>
-                        <select id="deviceType"  class="dropdown-menu2" >
-                            <option class="dropdown-item" value="Mobile" >Mobile</option>
-                            <option class="dropdown-item" value="Tablet">Tablet</option>
-                            <option class="dropdown-item" value="Wearable">Wearable</option>
-                        </select>
+                        <label for="staffId" style="margin-right: 5px"> 직원ID</label>
+                        <input type="text" id="staffId" class="form-control form-control-sm" placeholder="담당 직원 ID를 입력해주세요.">
+
+                    </div>
+                    <div class="input-group" style="margin-bottom: 7px">
+                        <label for="deviceId" style="margin-right: 5px"> 디바이스ID</label>
+                        <input type="text" id="deviceId" class="form-control form-control-sm" placeholder="디바이스 ID를 입력해주세요.">
                     </div>
                 </div>
                 <div class="modal-footer">
                     <button class="btn btn-secondary" type="button" data-dismiss="modal">취소</button>
-                    <a class="btn btn-primary" onclick="openRegister()" data-dismiss="modal">등록</a>
+                    <a class="btn btn-primary" onclick="openingRegister()" data-dismiss="modal">등록</a>
                 </div>
             </div>
         </div>
@@ -108,15 +88,39 @@
 <th:block layout:fragment="script">
     <script>
         $(document).ready(function() {
-            $('#dataTable').DataTable();
+            var table =  $('#dataTable').DataTable( {} );
+
+            // $('#dataTable tbody').on('click', 'tr', function () {
+            //     var data = table.row(this).data();
+            //     $('#uDeviceName').val(data[2]);
+            //     $('#uDeviceId').val(data[1]);
+            //     $('#uRegisterStatus').val(data[4]);
+            //     $('#uRegisteredDt').val(data[3]);
+            //
+            // });
         });
-        function openRegister() {
-            let customerName = $("#customerName").val();
-            let phoneNo = $("#phoneNo").val();
-            let deviceType = $("#deviceType").val();
-            console.log(customerName + phoneNo + deviceType);
-            $("#customerName").val("");
-            $("#phoneNo").val("");
+        function openingRegister() {
+            var openingDto = {
+                customerId : $("#customerId").val(),
+                deviceId :  $("#deviceId").val(),
+                staffId :  $("#staffId").val()
+            }
+
+            $.ajax({
+                type: "post",
+                url: "/api/openings",
+                data: JSON.stringify(openingDto),
+                dataType: "json",
+                contentType: "application/json; charset:UTF-8",
+                success: function(response){
+                    alert("청약 등록이 완료되었습니다.");
+                    location.reload();
+                },
+                error: function(err){
+                    alert("청약 등록이 정상적으로 수행되지 않았습니다.");
+                    location.reload();
+                }
+            })
         }
     </script>
 </th:block>

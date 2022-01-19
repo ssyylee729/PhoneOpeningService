@@ -7,18 +7,18 @@
 <!-- your html body here -->
 <div layout:fragment="content">
     <div class="container-fluid">
-        <h1 class="h3 mb-2 text-gray-800">고객 관리</h1>
+        <h1 class="h3 mb-2 text-gray-800">직원 관리</h1>
 
 
         <!-- DataTales Example -->
         <div class="card shadow mb-4">
             <div class="card-header py-3">
-                <h6 class="m-0 font-weight-bold text-secondary" style="width: 50%; float: left">고객 조회</h6>
-              <!--<button class="btn btn-dark" type="button" style="float: right; margin-left: 1rem" data-toggle="modal" data-target="#deleteModal">
-                   선택 고객 삭제
+                <h6 class="m-0 font-weight-bold text-secondary" style="width: 50%; float: left">직원 조회</h6>
+               <!-- <button class="btn btn-dark" type="button" style="float: right; margin-left: 1rem" data-toggle="modal" data-target="#deleteModal">
+                    선택 직원 삭제
                 </button>-->
                 <button class="btn btn-primary" type="button" style="float: right" data-toggle="modal" data-target="#registerModal">
-                    신규 고객 등록
+                    신규 직원 등록
                 </button>
             </div>
             <div class="card-body">
@@ -26,22 +26,20 @@
                     <table class="table table-bordered" id="dataTable" >
                         <thead>
                         <tr>
-                         <!--   <th><input type="checkbox"></th>-->
+                            <!--<th><input type="checkbox"></th>-->
                             <th>ID</th>
                             <th>이름</th>
                             <th>연락처</th>
-                            <th>생년월일</th>
                             <th>등록날짜</th>
                         </tr>
                         </thead>
                         <tbody>
-                        <tr data-toggle="modal" data-target="#updateModal" th:each="list: ${customerList}">
+                        <tr data-toggle="modal" data-target="#updateModal" th:each="list: ${staffList}">
                             <!--<th><input type="checkbox"></th>-->
-                            <td th:text="${list.getCustomerId()}"></td>
+                            <td th:text="${list.getStaffId()}"></td>
                             <td th:text="${list.getName()}"></td>
                             <td th:text="${list.getPhoneNumber()}"></td>
-                            <td th:text="${list.getBirthday()}">1989.03.09</td>
-                            <td th:text="${list.getCreatedDt()}">2022.01.04</td>
+                            <td th:text="${list.getCreatedDt()}">2022.01.03</td>
                         </tr>
                         </tbody>
                     </table>
@@ -54,19 +52,19 @@
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="createModalLabel">고객 등록</h5>
+                    <h5 class="modal-title" id="createModalLabel">직원 등록</h5>
                     <button class="close" type="button" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">×</span>
                     </button>
                 </div>
                 <div class="modal-body">
                     <div class="input-group" style="margin-bottom: 7px">
-                        <label for="customerName" style="margin-right: 5px; min-width: 6rem;"> 고객이름</label>
-                        <input type="text" id="customerName" class="form-control form-control-sm" placeholder="박소담">
+                        <label for="staffName" style="margin-right: 5px; min-width: 6rem;"> 직원이름</label>
+                        <input type="text" id="staffName" class="form-control form-control-sm" placeholder="박소담">
                     </div>
                     <div class="input-group" style="margin-bottom: 7px">
-                        <label for="customerId" style="margin-right: 5px; min-width: 6rem;"> 고객ID </label>
-                        <input type="text" id="customerId" class="form-control form-control-sm" placeholder="중복 체크를 눌러주세요">
+                        <label for="staffId" style="margin-right: 5px; min-width: 6rem;"> 직원ID </label>
+                        <input type="text" id="staffId" class="form-control form-control-sm" placeholder="중복 체크를 눌러주세요">
                         <div class="input-group-append">
                             <button class="btn btn-secondary" type="button" style="padding: 0.175rem 0.55rem;">
                                 중복체크
@@ -75,18 +73,18 @@
                     </div>
                     <div class="input-group" style="margin-bottom: 7px">
                         <label for="phoneNumber" style="margin-right: 5px; min-width: 6rem;"> 전화번호 </label>
-                        <input type="text" id="phoneNumber" class="form-control form-control-sm" placeholder="01073000000">
+                        <input type="text" id="phoneNumber" class="form-control form-control-sm" placeholder="010-7300-0000">
                     </div>
                     <div class="input-group" style="margin-bottom: 7px">
-                        <label for="birthday" style="margin-right: 5px; min-width: 6rem;"> 생년월일 </label>
-                        <input type="text" id="birthday" class="form-control form-control-sm" placeholder="1991.09.08">
+                        <label for="password" style="margin-right: 5px; min-width: 6rem;"> 비밀번호 </label>
+                        <input type="text" id="password" class="form-control form-control-sm" placeholder="비밀번호를 입력해주세요">
                     </div>
                     <!--
 
 
                    <div class="input-group" style="margin-bottom: 7px">
-                       <label for="customerPwd" style="margin-right: 5px; min-width: 6rem;"> 비밀번호 </label>
-                       <input type="password" id="customerPwd" class="form-control form-control-sm">
+                       <label for="staffPwd" style="margin-right: 5px; min-width: 6rem;"> 비밀번호 </label>
+                       <input type="password" id="staffPwd" class="form-control form-control-sm">
                    </div>
                    <div class="input-group" style="margin-bottom: 7px">
                        <label for="checkPwd" style="margin-right: 5px; min-width: 6rem;"> 비밀번호 확인 </label>
@@ -95,7 +93,7 @@
                 </div>
                 <div class="modal-footer">
                     <button class="btn btn-secondary" type="button" data-dismiss="modal">취소</button>
-                    <a class="btn btn-primary" onclick="customerRegister()" data-dismiss="modal">등록</a>
+                    <a class="btn btn-primary" onclick="staffRegister()" data-dismiss="modal">등록</a>
                 </div>
             </div>
         </div>
@@ -105,33 +103,33 @@
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="updateModalLabel">고객상세</h5>
+                    <h5 class="modal-title" id="updateModalLabel">직원상세</h5>
                     <button class="close" type="button" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">×</span>
                     </button>
                 </div>
                 <div class="modal-body">
                     <div class="input-group" style="margin-bottom: 7px">
-                        <label for="customerName" style="margin-right: 5px; min-width: 6rem;"> 고객이름 </label>
-                        <input type="text" id="uCustomerName" class="form-control form-control-sm" placeholder="최아무개">
+                        <label for="staffName" style="margin-right: 5px; min-width: 6rem;"> 직원이름 </label>
+                        <input type="text" id="uStaffName" class="form-control form-control-sm" placeholder="최아무개">
                     </div>
                     <div class="input-group" style="margin-bottom: 7px">
-                        <label for="customerId" style="margin-right: 5px; min-width: 6rem;"> 고객ID </label>
-                        <input type="text" id="uCustomerId" class="form-control form-control-sm" placeholder="choi11" readonly>
+                        <label for="staffId" style="margin-right: 5px; min-width: 6rem;"> 직원ID </label>
+                        <input type="text" id="uStaffId" class="form-control form-control-sm" placeholder="choi11" readonly>
                     </div>
                     <div class="input-group" style="margin-bottom: 7px">
                         <label for="phoneNumber" style="margin-right: 5px; min-width: 6rem;"> 전화번호 </label>
                         <input type="text" id="uPhoneNumber" class="form-control form-control-sm" placeholder="testuser003">
                     </div>
-                    <div class="input-group" style="margin-bottom: 7px">
-                        <label for="birthday" style="margin-right: 5px; min-width: 6rem;"> 생년월일 </label>
-                        <input type="text" id="uBirthday" class="form-control form-control-sm" placeholder="1990.02.10">
-                    </div>
+<!--                    <div class="input-group" style="margin-bottom: 7px">-->
+<!--                        <label for="password" style="margin-right: 5px; min-width: 6rem;"> 생년월일 </label>-->
+<!--                        <input type="text" id="uPassword" class="form-control form-control-sm" placeholder="1990.02.10">-->
+<!--                    </div>-->
 
                     <!--
                     <div class="input-group" style="margin-bottom: 7px">
-                        <label for="customerPwd" style="margin-right: 5px; min-width: 6rem;"> 비밀번호 </label>
-                        <input type="password" id="uCustomerPwd" class="form-control form-control-sm">
+                        <label for="staffPwd" style="margin-right: 5px; min-width: 6rem;"> 비밀번호 </label>
+                        <input type="password" id="uStaffPwd" class="form-control form-control-sm">
                     </div>
                     <div class="input-group" style="margin-bottom: 7px">
                         <label for="checkPwd" style="margin-right: 5px; min-width: 6rem;"> 비밀번호 확인 </label>
@@ -141,7 +139,7 @@
                 </div>
                 <div class="modal-footer">
                     <button class="btn btn-secondary" type="button" data-dismiss="modal">취소</button>
-                    <a class="btn btn-primary" onclick="customerUpdate()" data-dismiss="modal">수정</a>
+                    <a class="btn btn-primary" onclick="staffUpdate()" data-dismiss="modal">수정</a>
                     <a class="btn btn-danger" data-toggle="modal" data-target="#deleteModal">삭제</a>
                 </div>
             </div>
@@ -152,15 +150,15 @@
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">고객 삭제</h5>
+                    <h5 class="modal-title" id="exampleModalLabel">직원 삭제</h5>
                     <button class="close" type="button" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">×</span>
                     </button>
                 </div>
-                <div class="modal-body">고객을 삭제하시겠습니까?</div>
+                <div class="modal-body">직원을 삭제하시겠습니까?</div>
                 <div class="modal-footer">
                     <button class="btn btn-secondary" type="button" data-dismiss="modal">취소</button>
-                    <a class="btn btn-danger" data-dismiss="modal" onclick="customerDelete()">삭제</a>
+                    <a class="btn btn-danger" data-dismiss="modal" onclick="staffDelete()">삭제</a>
                 </div>
             </div>
         </div>
@@ -170,13 +168,15 @@
     <!-- your scripts here -->
     <script>
         $(document).ready(function() {
-            var table = $('#dataTable').DataTable({});
+
+           var table =  $('#dataTable').DataTable( {} );
+
             $('#dataTable tbody').on('click', 'tr', function () {
                 var data = table.row(this).data();
-                $('#uCustomerName').val(data[2]);
-                $('#uCustomerId').val(data[1]);
-                $('#uPhoneNumber').val(data[3]);
-                $('#uBirthday').val(data[4]);
+                $('#uStaffName').val(data[1]);
+                $('#uStaffId').val(data[0]);
+                $('#uPhoneNumber').val(data[2]);
+                $('#uPassword').val("");
 
             });
         });
@@ -193,70 +193,70 @@
             }, 0);
         });
 
-        function customerRegister() {
-           var customerDto = {
-               name: $('#customerName').val(),
-               customerId: $('#customerId').val(),
-               birthday: $('#birthday').val(),
-               phoneNumber: $('#phoneNumber').val()
-           }
+        function staffRegister() {
+            var staffDto = {
+                name: $('#staffName').val(),
+                staffId: $('#staffId').val(),
+                password: $('#password').val(),
+                phoneNumber: $('#phoneNumber').val()
+            }
 
-           $.ajax({
-               type: "post",
-               url: "/api/customers",
-               data: JSON.stringify(customerDto),
-               dataType: "json",
-               contentType: "application/json; charset:UTF-8",
-               success: function(response){
-                   alert("고객 등록이 완료되었습니다.");
-                   location.reload();
-               },
-               error: function(err){
-                   alert("고객 등록이 정상적으로 수행되지 않았습니다.");
-                   location.reload();
-               }
-           })
+            $.ajax({
+                type: "post",
+                url: "/api/staffs",
+                data: JSON.stringify(staffDto),
+                dataType: "json",
+                contentType: "application/json; charset:UTF-8",
+                success: function(response){
+                    alert("직원 등록이 완료되었습니다.");
+                    location.reload();
+                },
+                error: function(err){
+                    alert("직원 등록이 정상적으로 수행되지 않았습니다.");
+                    location.reload();
+                }
+            })
         }
-        function customerUpdate() {
-            var customerDto = {
-                name:  $('#uCustomerName').val(),
-                customerId: $('#uCustomerId').val(),
-                birthday: $('#uBirthday').val(),
+        function staffUpdate() {
+            var staffDto = {
+                name:  $('#uStaffName').val(),
+                staffId: $('#uStaffId').val(),
+                password: $('#uPassword').val(),
                 phoneNumber: $('#uPhoneNumber').val()
             }
 
             $.ajax({
                 type: "put",
-                url: "/api/customers",
-                data: JSON.stringify(customerDto),
+                url: "/api/staffs",
+                data: JSON.stringify(staffDto),
                 dataType: "json",
                 contentType: "application/json; charset:UTF-8",
                 success: function(response){
-                    alert("고객 정보 수정이 완료되었습니다.");
+                    alert("직원 정보 수정이 완료되었습니다.");
                     location.reload();
                 },
                 error: function(err){
-                    alert("고객 정보 수정이 정상적으로 수행되지 않았습니다.");
+                    alert("직원 정보 수정이 정상적으로 수행되지 않았습니다.");
                     location.reload();
                 }
             })
         }
-        function customerDelete() {
-            var customerId = $('#uCustomerId').val()
+        function staffDelete() {
+            var staffId = $('#uStaffId').val()
 
-            console.log(customerId)
+            console.log(staffId)
 
             $.ajax({
                 type: "DELETE",
                 dataType : 'text',
-                url: "/api/customers/"+ customerId,
+                url: "/api/staffs/"+ staffId,
                 /*contentType: "application/json; charset:UTF-8",*/
                 success: function(result){
-                    alert("고객 삭제가 완료되었습니다.");
+                    alert("직원 삭제가 완료되었습니다.");
                     location.reload();
                 },
                 error: function(err){
-                    alert("고객 삭제가 정상적으로 수행되지 않았습니다.");
+                    alert("직원 삭제가 정상적으로 수행되지 않았습니다.");
                     location.reload();
                 }
             })

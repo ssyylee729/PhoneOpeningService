@@ -20,7 +20,13 @@ public class Customer extends BaseEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    private String customerId;
+
     private String name;
+
+    private String phoneNumber;
+
+    private String birthday;
 
     @OneToMany
     @JoinColumn(name ="customer_id")

@@ -15,4 +15,10 @@ public interface CustomerRepository extends JpaRepository<Customer, Long> {
 	List<Customer> findByName(String name);
 
 	Page<Customer> findAll(Pageable pageable);
+
+	List<Customer> findAll();
+
+	Customer findByCustomerId(String customerId);
+
+	void deleteByCustomerId(String customerId);
 }
